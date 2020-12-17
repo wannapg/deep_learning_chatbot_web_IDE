@@ -9,7 +9,12 @@ import random
 import json 
 import pickle
 
-with open("intents.json") as file: 
+
+
+def main(request):
+    return render(request,"index.html")
+
+with open("C:/Users/강영은/chatbot/chat/intents.json") as file: 
     data = json.load(file)
 try:
     with open("data.pickle","rb") as f : 
@@ -94,12 +99,12 @@ def bag_of_words(s, words):
     return numpy.array(bag)
 
 
-def chat():
+def deepchat(request,inp):
     print("Start talking with the bot!(type quit to stop) ")
     while True:
-        inp = input("You: ")
-        if inp.lower()=="quit":
-            break
+        #inp = input("You: ")
+        #if inp.lower()=="quit":
+        #    break
         results = model.predict([bag_of_words(inp,words)])[0] #첫번째꺼 고르고
         results_index = numpy.argmax(results) #largest prediction 값 골라 
         tag = labels[results_index]
@@ -110,7 +115,9 @@ def chat():
                     responses = tg['responses']
         
             print(random.choice(responses))
+            return redirect('index',random.choice(responses))
         else:
             print("I didn't get that, try again. ")
+            return redirect('index',"I didn't get that, try again. "
 
-chat()
+#chat()

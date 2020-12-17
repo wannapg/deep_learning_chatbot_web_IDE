@@ -1,3 +1,7 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer=LancasterStemmer()
@@ -9,10 +13,16 @@ import random
 import json 
 import pickle
 
-with open("intents.json") as file: 
+
+# Create your views here.
+def index(request):
+    return render(request,"index.html")
+
+
+with open("C:/Users/강영은/chatbot/chat/intents.json") as file: 
     data = json.load(file)
 try:
-    with open("data.pickle","rb") as f : 
+    with open("C:/Users/강영은/chatbot/chat/data.pickle","rb") as f : 
         words,labels, training,output=pickle.load(f)
 except: 
     words = []
@@ -59,7 +69,7 @@ except:
     training = numpy.array(training)
     output = numpy.array(output)
 
-    with open("data.pickle","wb") as f : 
+    with open("C:/Users/강영은/chatbot/chat/data.pickle","wb") as f : 
        pickle.dump((words,labels, training,output),f)
 
 tensorflow.reset_default_graph()
@@ -73,10 +83,10 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
 #try: 
-model.load("model.tflearn")
+model.load("C:/Users/강영은/chatbot/chat/model.tflearn")
 #except: 
 model.fit(training, output, n_epoch=1000,batch_size=8,show_metric=True) #
-model.save("model.tflearn")
+model.save("C:/Users/강영은/chatbot/chat/model.tflearn")
 
 #prediction 
 #input of user words into bag of words
@@ -93,13 +103,12 @@ def bag_of_words(s, words):
 
     return numpy.array(bag)
 
-
-def chat():
+def deepchat(request,inp):
     print("Start talking with the bot!(type quit to stop) ")
     while True:
-        inp = input("You: ")
-        if inp.lower()=="quit":
-            break
+        #inp = input("You: ")
+        #if inp.lower()=="quit":
+        #    break
         results = model.predict([bag_of_words(inp,words)])[0] #첫번째꺼 고르고
         results_index = numpy.argmax(results) #largest prediction 값 골라 
         tag = labels[results_index]
@@ -110,7 +119,7 @@ def chat():
                     responses = tg['responses']
         
             print(random.choice(responses))
+            return redirect('index',random.choice(responses))
         else:
             print("I didn't get that, try again. ")
-
-chat()
+            return redirect('index',"I didn't get that, try again. ")

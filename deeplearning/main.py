@@ -110,7 +110,9 @@ def chat():
                     responses = tg['responses']
         
             print(random.choice(responses))
+            return random.choice(responses)
         else:
             print("I didn't get that, try again. ")
+            return "I didn't get that, try again. "
 
-chat()
+#chat()

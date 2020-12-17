@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.79.0">
+    <title>Dashboard Template · Bootstrap v5.0</title>
+
+
+    
+    {% load static %}
+
+     <!-- Custom fonts for this template-->
+      <link rel="stylesheet" href="{% static 'css/all.min.css' %}" type="text/css">
+      <!-- Page level plugin CSS-->
+      <link rel="stylesheet" href="{% static 'css/dataTables.bootstrap4.css' %}">
+      <!-- Custom styles for this template-->
+      <link rel="stylesheet" href="{% static 'css/sb-admin.css' %}">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      *{ margin: 0; padding: 0; }
+ 
+      .chat_wrap .header { font-size: 14px; padding: 15px 0; background: #F18C7E; color: white; text-align: center;  }
+      
+      .chat_wrap .chat { padding-bottom: 80px; }
+      .chat_wrap .chat ul { width: 100%; list-style: none; }
+      .chat_wrap .chat ul li { width: 100%; }
+      .chat_wrap .chat ul li.left { text-align: left; }
+      .chat_wrap .chat ul li.right { text-align: right; }
+      
+      .chat_wrap .chat ul li > div { font-size: 13px;  }
+      .chat_wrap .chat ul li > div.sender { margin: 10px 20px 0 20px; font-weight: bold; }
+      .chat_wrap .chat ul li > div.message { display: inline-block; word-break:break-all; margin: 5px 20px; max-width: 75%; border: 1px solid #F18C7E; padding: 10px; border-radius: 5px; background-color: #FCFCFC; color: #555; text-align: left; }
+      
+      .chat_wrap .input-div { position: fixed; bottom: 0; width: 100%; background-color: #FFF; text-align: center; border-top: 1px solid #F18C7E; }
+      .chat_wrap .input-div > textarea { width: 100%; height: 80px; border: none; padding: 10px; }
+      
+      .format { display: none; }
+
+
+    </style>
+
+
+  </head>
+  <body>
+    
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Professor Bot</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="#">Sign out</a>
+    </li>
+  </ul>
+</header>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+              <span data-feather="home"></span>
+              Programming Class - Python
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file"></span>
+              Orders
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="shopping-cart"></span>
+              Products
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              Customers
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="bar-chart-2"></span>
+              Reports
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="layers"></span>
+              Integrations
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Chats</span>
+          <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text" color="gray"></span>
+              Other class
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Last quarter
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Social engagement
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="file-text"></span>
+              Year-end sale
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+   
+
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Python Programming Class</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">Invite</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Settings</button>
+          </div>
+          <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <span data-feather="calendar"></span>
+            This week
+          </button>
+        </div>
+      </div>
+
+      <div id="chat">
+        <div class="chat_wrap">
+
+          <div class="chat">
+              <ul>
+                  <!-- 동적 생성 -->
+              </ul>
+          </div>
+          <div class="input-div">
+              <textarea id="message" name="message" placeholder="Press Enter for send message." onkeydown="JavaScript:Enter_Check();JavaScript:Bot_Response();"></textarea>
+          </div>
+       
+          <!-- format -->
+       
+          <div class="chat format">
+              <ul>
+                  <li>
+                      <div class="sender">
+                          <span></span>
+                      </div>
+                      <div class="message">
+                          <span></span>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  
+  
+      </div>
+    </main>
+  </div>
+</div>
+
+    <script>
+      function Enter_Check(){
+          // 엔터키의 코드 13
+        if(event.keyCode == 13){
+          const message = $('#message').val();
+          let chatLi = $('div.chat.format ul li').clone();
+          chatLi.addClass('right','Me',message);
+          chatLi.find('.sender span').text("Me");
+          chatLi.find('.message span').text(message);
+          $('div.chat:not(.format) ul').append(chatLi);
+
+          
+          // 스크롤바 아래 고정
+          $('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
+          //sendMessage(message);
+          $('div.input-div textarea').val('');
+        }
+      }
+
+      function Bot_Response(){
+        if(event.keyCode == 13){
+          
+          const message = $('#message').val();
+            let chatLi = $('div.chat.format ul li').clone();
+            chatLi.addClass('left','Bot',message);
+            chatLi.find('.sender span').text("Bot");
+            chatLi.find('.message span').text(message);
+            $('div.chat:not(.format) ul').append(chatLi);
+        }
+      }
+    
+      const Chat = (function(){
+      const myName = "ME";
+ 
+    // init 함수
+    function init() {
+        // enter 키 이벤트
+        $(document).on('keydown', 'div.input-div textarea', function(e){
+            if(e.keyCode == 13 && !e.shiftKey) {
+                e.preventDefault();
+                const message = $(this).val();
+ 
+                // 메시지 전송
+                sendMessage(message);
+                // 입력창 clear
+                clearTextarea();
+            }
+        });
+    }
+ 
+    // 메세지 태그 생성
+    function createMessageTag(LR_className, senderName, message) {
+        // 형식 가져오기
+        let chatLi = $('div.chat.format ul li').clone();
+ 
+        // 값 채우기
+        chatLi.addClass(LR_className);
+        chatLi.find('.sender span').text(senderName);
+        chatLi.find('.message span').text(message);
+ 
+        return chatLi;
+    }
+ 
+    // 메세지 태그 append
+    function appendMessageTag(LR_className, senderName, message) {
+        const chatLi = createMessageTag(LR_className, senderName, message);
+ 
+        $('div.chat:not(.format) ul').append(chatLi);
+ 
+        // 스크롤바 아래 고정
+        $('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
+    }
+ 
+    // 메세지 전송
+    function sendMessage(message) {
+        // 서버에 전송하는 코드로 후에 대체
+        const data = {
+            "senderName"    : "Me",
+            "message"        : message
+        };
+        // 통신하는 기능이 없으므로 여기서 receive
+        resive(data);
+    }
+
+ 
+    // 메세지 수신
+    function resive(data) {
+        const LR = (data.senderName != myName)? "left" : "right";
+        appendMessageTag("right", data.senderName, data.message);
+    }
+ 
+    return {
+        'init': init
+    };
+})();
+ 
+$(function(){
+    Chat.init();
+});
+
+
+    </script>
+    <!-- Bootstrap core JavaScript-->
+     <!-- Bootstrap core JavaScript-->
+      <script src="{% static 'js/jquery.min.js' %}"></script>
+      <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+      <!-- Core plugin JavaScript-->
+      <script src="{% static 'js/jquery.easing.min.js' %}"></script>
+
+      <!-- Custom scripts for all pages-->
+      <script src="{% static 'js/sb-admin.min.js' %}"></script>
+  </body>
+</html>
