@@ -218,19 +218,31 @@
           // 스크롤바 아래 고정
           $('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
           //sendMessage(message);
-          $('div.input-div textarea').val('');
         }
       }
 
       function Bot_Response(){
         if(event.keyCode == 13){
-          
-          const message = $('#message').val();
-            let chatLi = $('div.chat.format ul li').clone();
-            chatLi.addClass('left','Bot',message);
-            chatLi.find('.sender span').text("Bot");
-            chatLi.find('.message span').text(message);
-            $('div.chat:not(.format) ul').append(chatLi);
+            const message = $('#message').val();
+            $.ajax({
+              type: 'POST',
+              url: 'deepchat/<str:inp>',
+              data: {inp:$('#message').val()},
+              dataType: 'json',
+
+              success: function(result){
+                  $('#chat format').html('<p>'+result['answer']);
+                  let chatLi = $('div.chat.format ul li').clone();
+                  chatLi.addClass('left','Bot',result['answer']);
+                  chatLi.find('.sender span').text("Bot");
+                  chatLi.find('.message span').text(result['answer']);
+                  console.log(result['answer']);
+                  $('div.chat:not(.format) ul').append(chatLi);
+              },
+              error: function(e){console.log('error:');}
+            });
+           
+            $('div.input-div textarea').val('');
         }
       }
     

@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
+from django.http import JsonResponse 
+from django.views.decorators.csrf import csrf_exempt
+
 import nltk
 from nltk.stem.lancaster import LancasterStemmer
 stemmer=LancasterStemmer()
@@ -103,8 +106,10 @@ def bag_of_words(s, words):
 
     return numpy.array(bag)
 
+@csrf_exempt
 def deepchat(request,inp):
     print("Start talking with the bot!(type quit to stop) ")
+    inp = request.POST['inp']
     while True:
         #inp = input("You: ")
         #if inp.lower()=="quit":
@@ -112,14 +117,24 @@ def deepchat(request,inp):
         results = model.predict([bag_of_words(inp,words)])[0] #첫번째꺼 고르고
         results_index = numpy.argmax(results) #largest prediction 값 골라 
         tag = labels[results_index]
-        
+        print(inp)
         if results[results_index]>0.5 : #70%의 정확도를 가질 경우만 
             for tg in data["intents"]:
                 if tg['tag']==tag: 
                     responses = tg['responses']
-        
-            print(random.choice(responses))
-            return redirect('index',random.choice(responses))
+            
+            response ={
+                'answer': random.choice(responses)
+            }
+            print(response)
+            #data = request.POST['data']
+            #return JsonResponse(response)
+            return HttpResponse(json.dumps(response))
         else:
             print("I didn't get that, try again. ")
-            return redirect('index',"I didn't get that, try again. ")
+            response ={
+                'answer':"I didn't get that, try again."
+            }
+            print(response)
+            #return JsonResponse(response)
+            return HttpResponse(json.dumps(response))
